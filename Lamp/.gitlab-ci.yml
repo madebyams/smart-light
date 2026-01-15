@@ -1,0 +1,11 @@
+Lamp:build:
+  stage: build
+  tags:
+    - docker
+  script:
+    - |
+      cd Lamp
+      pip install -U platformio
+      pio upgrade --dev
+      pio pkg update
+      pio run

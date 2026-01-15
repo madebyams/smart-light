@@ -5,3 +5,4 @@ stages:
 
 include:
   - local: "DetectionModule/.gitlab-ci.yml"
+  - local: "Lamp/.gitlab-ci.yml"
