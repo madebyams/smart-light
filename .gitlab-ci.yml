@@ -6,7 +6,7 @@ stages:
 build:
   stage: build
   tags:
-    - linux
+    - docker
   script:
     - |
       cd DetectionModule
