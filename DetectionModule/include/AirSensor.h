@@ -4,7 +4,6 @@
 
 #ifndef RADAR_AIRSENSOR_H
 #define RADAR_AIRSENSOR_H
-#include <cstdint>
 #include <SparkFun_SCD4x_Arduino_Library.h>
 
 #define FAILURE_LED  33

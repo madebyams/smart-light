@@ -3,6 +3,7 @@
 #include "LDR.h"
 #include "Mic.h"
 #include "RadarSensor.h"
+#include <../include/SparkFunISL29125.h>
 
 
 #define LED_BUILTIN 2
@@ -13,16 +14,24 @@ AirSensor::Sensor airSensor;
 LDR ldr(LDR_PIN);
 Mic mic(MIC_PIN);
 RadarSensor radar_sensor(16, 17, 1);
-
+SFE_ISL29125 RGB_sensor(0x44);
 
 void setup() {
   Serial.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);
 
-  airSensor.init();
-  ldr.init();
   mic.init();
+  ldr.init();
+
   radar_sensor.init();
+
+  airSensor.init();
+
+  Serial.print("Initalizing‚ RGB Sensor");
+  while (!RGB_sensor.init()) {
+    Serial.print(".");
+  }
+  Serial.println();
 }
 
 void loop() {
@@ -31,6 +40,10 @@ void loop() {
   AirSensor::Data airSensorData = airSensor.measure();
   int micValue = mic.measure();
   int ldrValue = ldr.measure();
+
+  unsigned int red = RGB_sensor.readRed();
+  unsigned int green = RGB_sensor.readGreen();
+  unsigned int blue = RGB_sensor.readBlue();
 
   Serial.print("Mic: ");
   Serial.println(micValue);
@@ -49,6 +62,9 @@ void loop() {
 
   Serial.print("LDR: ");
   Serial.println(ldrValue);
+
+  Serial.printf("Color (%d, %d, %d)", red, green, blue);
+  Serial.println();
 
   Serial.println();
 
