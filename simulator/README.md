@@ -1,9 +1,11 @@
 # Device
- - Raspberry Pi with Home Assistant OS 16.3
- - ESP32-32
- - Monitor 
+
+- Raspberry Pi with Home Assistant OS 16.3
+- ESP32-32
+- Monitor
 
 # Steps
+
 ## Hardware setting
 
 
@@ -15,14 +17,14 @@
 
 ## VS Code setting 
 
-1. `brew install platformio`  and  `brew install mosquitto_pub.
+1. `brew install platformio`  and  `brew install mosquitto_pub`.
 2. install `platformio` extension
 3. Edit WiFi Configuration and MQTT Configuration in `main.cpp` 
 4. Compile and upload code to ESP32 and start monitoring with command  `pio run -e esp32dev --target upload && pio device monitor -b 115200`
-
 5. You should see this in the terminal
+
 ```
- ========================= [SUCCESS] Took 19.65 seconds =========================
+========================= [SUCCESS] Took 19.65 seconds =========================
 --- Terminal on /dev/cu.usbserial-0001 | 115200 8-N-1
 --- Available filters and text transformations: colorize, debug, default, direct, esp32_exception_decoder, hexlify, log2file, nocontrol, printable, send_on_enter, time
 --- More details at https://bit.ly/pio-monitor-filters
