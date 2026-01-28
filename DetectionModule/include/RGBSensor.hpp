@@ -2,8 +2,8 @@
 #define RADAR_RGBSENSOR_H
 #include <sstream>
 
-#include "Config.h"
-#include <SparkFunISL29125.h>
+#include "Config.hpp"
+#include <SparkFunISL29125.hpp>
 
 class RGBSensor {
     SFE_ISL29125 rgb_sensor;

@@ -1,7 +1,7 @@
 //
 // Created by Amsakan on 15.01.26.
 //
-#include "LDR.h"
+#include "LDR.hpp"
 
 #include <Arduino.h>
 

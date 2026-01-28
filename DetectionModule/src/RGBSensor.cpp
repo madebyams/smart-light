@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "RGBSensor.h"
+#include "RGBSensor.hpp"
 
 
 void RGBSensor::init() {

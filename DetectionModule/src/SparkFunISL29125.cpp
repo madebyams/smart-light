@@ -16,7 +16,7 @@ This code is beerware; if you see me (or any other SparkFun employee) at the loc
 Distributed as-is; no warranty is given. 
 ******************************************************************************/
 
-#include "../include/SparkFunISL29125.h"
+#include "../include/SparkFunISL29125.hpp"
 
 // Constructor - Creates sensor object and sets I2C address
 SFE_ISL29125::SFE_ISL29125(uint8_t addr) 

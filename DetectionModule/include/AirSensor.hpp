@@ -8,7 +8,7 @@
 
 #include <SparkFun_SCD4x_Arduino_Library.h>
 
-#include "Config.h"
+#include "Config.hpp"
 
 #define FAILURE_LED  33
 

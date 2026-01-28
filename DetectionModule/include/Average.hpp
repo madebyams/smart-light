@@ -5,8 +5,8 @@
 #ifndef DETECTIONMODULE_AVERAGE_HH
 #define DETECTIONMODULE_AVERAGE_HH
 #include <cstdint>
-#include "AirSensor.h"
-#include "RGBSensor.h"
+#include "AirSensor.hpp"
+#include "RGBSensor.hpp"
 
 namespace Average {
     int calulcate_average(int* data, uint32_t size);

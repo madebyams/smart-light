@@ -1,11 +1,11 @@
 #include <Arduino.h>
-#include "Average.h"
-#include "AirSensor.h"
-#include "Config.h"
-#include "LDR.h"
-#include "Mic.h"
-#include "RadarSensor.h"
-#include "RGBSensor.h"
+#include "Average.hpp"
+#include "AirSensor.hpp"
+#include "Config.hpp"
+#include "LDR.hpp"
+#include "Mic.hpp"
+#include "RadarSensor.hpp"
+#include "RGBSensor.hpp"
 
 
 AirSensor air_sensor;

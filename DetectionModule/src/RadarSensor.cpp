@@ -1,7 +1,7 @@
 //
 // Created by Amsakan on 15.01.26.
 //
-#include "RadarSensor.h"
+#include "RadarSensor.hpp"
 
 void RadarSensor::init() {
     hwSerial.begin(115200, SERIAL_8N1, 16, 17);  //RX,TX
