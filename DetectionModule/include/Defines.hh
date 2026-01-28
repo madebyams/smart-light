@@ -1,8 +1,0 @@
-//
-// Created by Amsakan on 28.01.26.
-//
-
-#ifndef DETECTIONMODULE_DEFINES_HH
-#define DETECTIONMODULE_DEFINES_HH
-#define BUFFER_SIZE 50
-#endif //DETECTIONMODULE_DEFINES_HH

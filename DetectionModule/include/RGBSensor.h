@@ -2,7 +2,7 @@
 #define RADAR_RGBSENSOR_H
 #include <sstream>
 
-#include "Defines.hh"
+#include "Config.h"
 #include <SparkFunISL29125.h>
 
 class RGBSensor {

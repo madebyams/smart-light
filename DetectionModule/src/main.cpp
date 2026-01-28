@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "Average.hh"
+#include "Average.h"
 #include "AirSensor.h"
-#include "Defines.hh"
+#include "Config.h"
 #include "LDR.h"
 #include "Mic.h"
 #include "RadarSensor.h"

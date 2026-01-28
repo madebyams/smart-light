@@ -1,0 +1,15 @@
+BUFFER_SIZE: 50
+
+WIFI:
+  SSID: ""
+  PASSWORD: ""
+
+MQTT:
+  SERVER: ""
+  PORT: 1883
+  USER: ""
+  PASSWORD: ""
+
+  TOPICS:
+    COMMAND: ""
+    STATE: ""

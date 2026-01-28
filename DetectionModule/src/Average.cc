@@ -1,7 +1,7 @@
 //
 // Created by Amsakan on 28.01.26.
 //
-#include "Average.hh"
+#include "Average.h"
 
 int Average::calulcate_average(int* data, uint32_t size) {
     sort(data, size);
