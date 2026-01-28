@@ -2,8 +2,14 @@ from pathlib import Path
 import yaml
 
 empty_environment = {
-    "BUFFER_SIZE": 0,
+    "BUFFER_SIZE": 50,
     
+    "GPIO": {
+        "STATUS_LED": 2,
+        "LDR": 15,
+        "MIC": 26
+    },
+
     "WIFI": {
         "SSID": "",
         "PASSWORD": ""

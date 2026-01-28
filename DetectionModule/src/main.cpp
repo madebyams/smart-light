@@ -8,18 +8,13 @@
 #include "RGBSensor.h"
 
 
-#define LED_BUILTIN 2
-#define LDR_PIN     15
-#define MIC_PIN     26
-
-
 AirSensor air_sensor;
 AirSensor::DataBuffer air_data_buffer;
 
-LDR ldr(LDR_PIN);
+LDR ldr(GPIO_LDR);
 int ldr_data_buffer[BUFFER_SIZE];
 
-Mic mic(MIC_PIN);
+Mic mic(GPIO_MIC);
 int mic_data_buffer[BUFFER_SIZE];
 
 RadarSensor radar_sensor(16, 17, 1);
@@ -31,7 +26,7 @@ RGBSensor::ColorBuffer rgb_sensor_buffer;
 
 void setup() {
   Serial.begin(115200);
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(GPIO_STATUS_LED, OUTPUT);
 
   mic.init();
   ldr.init();
