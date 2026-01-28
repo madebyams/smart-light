@@ -12,12 +12,7 @@
 LightStrip strip(NUM_PIXELS, DATA_PIN, CLOCK_PIN);
 
 void setup() {
-    // Initialize serial port for debugging (optional)
-    Serial.begin(115200);
-    Serial.println("WS2801 test starting...");
-
     strip.init();
-    // Turn the entire strip red
     strip.fillColor(255, 0, 0);
 }
 

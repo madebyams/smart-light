@@ -1,7 +1,6 @@
 #include "LightStrip.hh"
 
 void LightStrip::init() {
-    // Initialize LED strcleip
   strip.begin();
   strip.show(); // Clear all LEDs (turn off)
 }

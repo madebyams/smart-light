@@ -1,20 +1,33 @@
 #include <Arduino.h>
+#include "Average.hh"
 #include "AirSensor.h"
+#include "Defines.hh"
 #include "LDR.h"
 #include "Mic.h"
 #include "RadarSensor.h"
-#include <../include/SparkFunISL29125.h>
+#include "RGBSensor.h"
 
 
 #define LED_BUILTIN 2
 #define LDR_PIN     15
 #define MIC_PIN     26
 
-AirSensor::Sensor airSensor;
+
+AirSensor air_sensor;
+AirSensor::DataBuffer air_data_buffer;
+
 LDR ldr(LDR_PIN);
+int ldr_data_buffer[BUFFER_SIZE];
+
 Mic mic(MIC_PIN);
+int mic_data_buffer[BUFFER_SIZE];
+
 RadarSensor radar_sensor(16, 17, 1);
-SFE_ISL29125 RGB_sensor(0x44);
+bool radar_sensor_buffer[BUFFER_SIZE];
+
+RGBSensor rgb_sensor(0x44);
+RGBSensor::ColorBuffer rgb_sensor_buffer;
+
 
 void setup() {
   Serial.begin(115200);
@@ -25,48 +38,35 @@ void setup() {
 
   radar_sensor.init();
 
-  airSensor.init();
+  air_sensor.init();
 
   Serial.print("Initalizing‚ RGB Sensor");
-  while (!RGB_sensor.init()) {
-    Serial.print(".");
-  }
+  rgb_sensor.init();
   Serial.println();
 }
 
 void loop() {
-  bool radar_value = radar_sensor.measure();
-  digitalWrite(LED_BUILTIN, radar_value);
-  AirSensor::Data airSensorData = airSensor.measure();
-  int micValue = mic.measure();
-  int ldrValue = ldr.measure();
+  for(int i = 0; i < BUFFER_SIZE; i++) {
+    air_sensor.measure(&air_data_buffer, i);
+    ldr_data_buffer[i] = ldr.measure();
+    mic_data_buffer[i] = mic.measure();
+    radar_sensor_buffer[i] = radar_sensor.measure();
+    rgb_sensor.measure(&rgb_sensor_buffer, i);
+  }
 
-  unsigned int red = RGB_sensor.readRed();
-  unsigned int green = RGB_sensor.readGreen();
-  unsigned int blue = RGB_sensor.readBlue();
+  Serial.print("LDR Avg: ");
+  Serial.println(Average::calulcate_average(ldr_data_buffer, BUFFER_SIZE));
 
-  Serial.print("Mic: ");
-  Serial.println(micValue);
+  Serial.print("Mic Avg: ");
+  Serial.println(Average::calulcate_average(mic_data_buffer, BUFFER_SIZE));
 
-  Serial.print("Presence: ");
-  Serial.println(radar_value);
+  AirSensor::Data air_avg = Average::calculate_average(&air_data_buffer, BUFFER_SIZE);
+  Serial.print("Air avg: ");
+  Serial.println(air_avg.to_string().c_str());
 
-  Serial.print("CO2: ");
-  Serial.println(airSensorData.co2);
+  RGBSensor::Color color_avg = Average::calculate_average(&rgb_sensor_buffer, BUFFER_SIZE);
+  Serial.print("RGB avg: ");
+  Serial.println(color_avg.to_string().c_str());
 
-  Serial.print("Temperature: ");
-  Serial.println(airSensorData.temperature);
-
-  Serial.print("Humidity: ");
-  Serial.println(airSensorData.humidity);
-
-  Serial.print("LDR: ");
-  Serial.println(ldrValue);
-
-  Serial.printf("Color (%d, %d, %d)", red, green, blue);
-  Serial.println();
-
-  Serial.println();
-
-  delay(100);
+  delay(5000);
 }
