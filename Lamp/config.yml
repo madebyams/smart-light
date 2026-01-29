@@ -1,0 +1,22 @@
+LIGHT:
+  LED_AMOUNT: 100
+  PINS:
+    DATA: 23
+    CLOCK: 18
+
+WIFI:
+  SSID: "FRITZ!Box 6690 LR"
+  PASSWORD: "69662372082075794623"
+  CONNECTION_ATTEMPTS: 30
+
+MQTT:
+  SERVER: "192.168.178.166"
+  PORT: 1883
+  DEVICE_ID: "ESP32_LightStrip"
+  USER: "xudong"
+  PASSWORD: "112233"
+  CONNECTION_ATTEMPTS: 5
+
+  TOPICS:
+    SET: "home/ledstrip/set"
+    STATUS: "home/ledstrip/status"
