@@ -1,3 +1,5 @@
+.vscode
+.idea
 .pio
 include/Config.hpp
 config.home.yml
