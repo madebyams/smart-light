@@ -5,10 +5,10 @@
 
 #include <Arduino.h>
 
-void LDR::init() {
-    pinMode(pin, INPUT);
+void ldr::init() {
+    pinMode(pin_, INPUT);
 }
 
-int LDR::measure() {
-    return analogRead(pin);
+int ldr::measure() {
+    return analogRead(pin_);
 }

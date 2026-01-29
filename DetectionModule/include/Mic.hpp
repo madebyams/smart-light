@@ -4,11 +4,13 @@
 
 #ifndef RADAR_MIC_H
 #define RADAR_MIC_H
-class Mic {
-    int pin;
+
+class mic {
+    int pin_;
 public:
-    Mic(int pin) : pin(pin) {}
+    explicit mic(int pin) : pin_(pin) {}
     void init();
     int measure();
 };
-#endif //RADAR_MIC_H
+
+#endif // RADAR_MIC_H

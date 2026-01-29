@@ -4,11 +4,12 @@
 
 #ifndef RADAR_LDR_H
 #define RADAR_LDR_H
-class LDR {
-    int pin;
+class ldr {
+    int pin_;
 public:
-    LDR(int pin) : pin(pin) {}
+    explicit ldr(int pin) : pin_(pin) {}
     void init();
     int measure();
 };
+
 #endif //RADAR_LDR_H

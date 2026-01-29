@@ -5,10 +5,10 @@
 
 #include <Arduino.h>
 
-void Mic::init() {
-    pinMode(pin, INPUT);
+void mic::init() {
+    pinMode(pin_, INPUT);
 }
 
-int Mic::measure() {
-    return analogRead(pin);
+int mic::measure() {
+    return analogRead(pin_);
 }

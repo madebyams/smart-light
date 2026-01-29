@@ -9,15 +9,20 @@
 #include <DFRobot_mmWave_Radar.h>
 
 
-class RadarSensor {
-    uint8_t rx, tx;
-    HardwareSerial hwSerial;
-    DFRobot_mmWave_Radar sensor;
+class radar_sensor {
+    uint8_t rx_;
+    uint8_t tx_;
+    HardwareSerial hw_serial_;
+    DFRobot_mmWave_Radar sensor_;
 public:
-    RadarSensor(const uint8_t rx, const uint8_t tx, uint8_t uart_nr)
-        : rx(rx), tx(tx), hwSerial(uart_nr), sensor(&hwSerial) {}
+    radar_sensor(uint8_t rx, uint8_t tx, uint8_t uart_nr)
+        : rx_(rx)
+        , tx_(tx)
+        , hw_serial_(uart_nr)
+        , sensor_(&hw_serial_) {}
 
     void init();
     bool measure();
 };
+
 #endif //RADAR_RADARSENSOR_H

@@ -1,67 +1,69 @@
 #include <Arduino.h>
+
 #include "Average.hpp"
 #include "AirSensor.hpp"
 #include "Config.hpp"
 #include "LDR.hpp"
+#include "Measurement.hpp"
 #include "Mic.hpp"
+#include "Mqtt.hpp"
 #include "RadarSensor.hpp"
 #include "RGBSensor.hpp"
+#include "WiFi.hpp"
 
 
-AirSensor air_sensor;
-AirSensor::DataBuffer air_data_buffer;
+air_sensor air_sensor_instance;
+air_sensor::data_buffer air_data_buffer;
 
-LDR ldr(GPIO_LDR);
+ldr ldr_sensor(GPIO_LDR);
 int ldr_data_buffer[BUFFER_SIZE];
 
-Mic mic(GPIO_MIC);
+mic mic_sensor(GPIO_MIC);
 int mic_data_buffer[BUFFER_SIZE];
 
-RadarSensor radar_sensor(16, 17, 1);
+radar_sensor radar_sensor_instance(16, 17, 1);
 bool radar_sensor_buffer[BUFFER_SIZE];
 
-RGBSensor rgb_sensor(0x44);
-RGBSensor::ColorBuffer rgb_sensor_buffer;
+rgb_sensor rgb_sensor_instance(0x44);
+rgb_sensor::color_buffer rgb_sensor_buffer;
 
+measurement measurement;
 
 void setup() {
   Serial.begin(115200);
   pinMode(GPIO_STATUS_LED, OUTPUT);
 
-  mic.init();
-  ldr.init();
+  net::wifi::init();
+  net::mqtt::init();
 
-  radar_sensor.init();
+  mic_sensor.init();
+  ldr_sensor.init();
 
-  air_sensor.init();
+  radar_sensor_instance.init();
 
-  Serial.print("Initalizing‚ RGB Sensor");
-  rgb_sensor.init();
+  air_sensor_instance.init();
+
+  rgb_sensor_instance.init();
   Serial.println();
 }
 
 void loop() {
-  for(int i = 0; i < BUFFER_SIZE; i++) {
-    air_sensor.measure(&air_data_buffer, i);
-    ldr_data_buffer[i] = ldr.measure();
-    mic_data_buffer[i] = mic.measure();
-    radar_sensor_buffer[i] = radar_sensor.measure();
-    rgb_sensor.measure(&rgb_sensor_buffer, i);
+  for (int i = 0; i < BUFFER_SIZE; i++) {
+    air_sensor_instance.measure(&air_data_buffer, i);
+    ldr_data_buffer[i] = ldr_sensor.measure();
+    mic_data_buffer[i] = mic_sensor.measure();
+    radar_sensor_buffer[i] = radar_sensor_instance.measure();
+    rgb_sensor_instance.measure(&rgb_sensor_buffer, i);
   }
 
-  Serial.print("LDR Avg: ");
-  Serial.println(Average::calulcate_average(ldr_data_buffer, BUFFER_SIZE));
+  measurement = {
+    .brightness = average::calculate_average(ldr_data_buffer, BUFFER_SIZE),
+    .noise_level = average::calculate_average(mic_data_buffer, BUFFER_SIZE),
+    .presence = average::calculate_average(radar_sensor_buffer, BUFFER_SIZE),
+    .air_quality = average::calculate_average(&air_data_buffer, BUFFER_SIZE),
+    .light_color = average::calculate_average(&rgb_sensor_buffer, BUFFER_SIZE)
+  };
 
-  Serial.print("Mic Avg: ");
-  Serial.println(Average::calulcate_average(mic_data_buffer, BUFFER_SIZE));
-
-  AirSensor::Data air_avg = Average::calculate_average(&air_data_buffer, BUFFER_SIZE);
-  Serial.print("Air avg: ");
-  Serial.println(air_avg.to_string().c_str());
-
-  RGBSensor::Color color_avg = Average::calculate_average(&rgb_sensor_buffer, BUFFER_SIZE);
-  Serial.print("RGB avg: ");
-  Serial.println(color_avg.to_string().c_str());
-
+  net::mqtt::write(measurement.to_string());
   delay(5000);
 }
