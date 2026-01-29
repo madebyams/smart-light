@@ -8,8 +8,9 @@
 #define WIFI_PASSWORD ""
 #define MQTT_SERVER ""
 #define MQTT_PORT 1883
+#define MQTT_DEVICE_ID "DetectionModule"
 #define MQTT_USER ""
 #define MQTT_PASSWORD ""
-#define MQTT_TOPICS_COMMAND ""
-#define MQTT_TOPICS_STATE ""
+#define MQTT_CONNECTION_ATTEMPTS 5
+#define MQTT_TOPICS_MEASUREMENT_DATA ""
 #endif

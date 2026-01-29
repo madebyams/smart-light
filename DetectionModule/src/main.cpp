@@ -48,6 +48,10 @@ void setup() {
 }
 
 void loop() {
+  if (!net::mqtt::is_connected()) {
+    net::mqtt::reconnect();
+  }
+
   for (int i = 0; i < BUFFER_SIZE; i++) {
     air_sensor_instance.measure(&air_data_buffer, i);
     ldr_data_buffer[i] = ldr_sensor.measure();

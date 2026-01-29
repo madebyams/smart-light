@@ -7,6 +7,8 @@
 namespace net {
     namespace mqtt {
         void init();
+        void reconnect();
+        bool is_connected();
         void write(std::string message);
     }
 }

@@ -18,12 +18,14 @@ empty_environment = {
     "MQTT": {
         "SERVER": "",
         "PORT": 1883,
+        "DEVICE_ID": "",
         "USER": "",
         "PASSWORD": "",
+
+        "CONNECTION_ATTEMPTS": 5,
     
         "TOPICS": {
-            "COMMAND": "",
-            "STATE": ""
+            "MEASUREMENT_DATA": ""
         }
     }
 }
