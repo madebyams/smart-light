@@ -4,12 +4,15 @@
 #include <cstdint>
 #include <Adafruit_WS2801.h>
 
-class light_strip {
+class light_strip
+{
     uint32_t pixels;
     Adafruit_WS2801 strip;
+
+public:
     bool strip_on = false;
     uint8_t r = 0, g = 0, b = 0;
-public:
+
     light_strip(uint32_t pixels, uint8_t data_pin, uint8_t clock_pin)
         : pixels(pixels), strip(pixels, data_pin, clock_pin) {}
 

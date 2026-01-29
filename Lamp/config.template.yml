@@ -5,18 +5,18 @@ LIGHT:
     CLOCK: 18
 
 WIFI:
-  SSID: ""
-  PASSWORD: ""
+  SSID: "FRITZ!Box 6591 Cable VG"
+  PASSWORD: "99463263925230016110"
   CONNECTION_ATTEMPTS: 30
 
 MQTT:
-  SERVER: ""
+  SERVER: "192.168.178.166"
   PORT: 1883
   DEVICE_ID: "ESP32_LightStrip"
-  USER: ""
-  PASSWORD: ""
+  USER: "xudong"
+  PASSWORD: "112233"
   CONNECTION_ATTEMPTS: 5
 
   TOPICS:
-    SET: ""
-    STATUS: ""
+    SET: "smartlight/lamp/command"
+    STATUS: "smartlight/lamp/status"

@@ -29,7 +29,22 @@ void mqtt_callback(char *topic, byte *payload, unsigned int len) {
     Serial.println("==========================================\n");
     return;
   }
+// handle state
+  if (doc.containsKey("state")) {
+    String state = doc["state"];
+    strip.strip_on = (state == "ON");
+    Serial.printf("[MQTT] Set state: %s\n", state.c_str());
+  }
 
+  // handle color
+  if (doc.containsKey("color")) {
+    strip.r = doc["color"]["r"];
+    strip.g = doc["color"]["g"];
+    strip.b = doc["color"]["b"];
+    Serial.printf("[MQTT] Set color: RGB(%d,%d,%d)\n", strip.r, strip.g, strip.b);
+  }
+
+  Serial.println("==========================================\n");
   net::mqtt::publish_status(strip);
 }
 
