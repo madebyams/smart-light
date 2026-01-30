@@ -10,7 +10,8 @@
 // LED Strip Configuration
 light_strip strip(LIGHT_LED_AMOUNT, LIGHT_PINS_DATA, LIGHT_PINS_CLOCK);
 
-void mqtt_callback(char *topic, byte *payload, unsigned int len) {
+void mqtt_callback(char *topic, byte *payload, unsigned int len)
+{
   String msg;
   for (uint16_t i = 0; i < len; i++)
     msg += (char)payload[i];
@@ -29,26 +30,26 @@ void mqtt_callback(char *topic, byte *payload, unsigned int len) {
     Serial.println("==========================================\n");
     return;
   }
-// handle state
-  if (doc.containsKey("state")) {
+  // handle state
+  if (doc.containsKey("state"))
+  {
     String state = doc["state"];
-    strip.strip_on = (state == "ON");
+    strip.setState(state == "ON");
     Serial.printf("[MQTT] Set state: %s\n", state.c_str());
   }
 
   // handle color
-  if (doc.containsKey("color")) {
-    strip.r = doc["color"]["r"];
-    strip.g = doc["color"]["g"];
-    strip.b = doc["color"]["b"];
-    Serial.printf("[MQTT] Set color: RGB(%d,%d,%d)\n", strip.r, strip.g, strip.b);
+  if (doc.containsKey("color"))
+  {
+    strip.setColor(doc["color"]["r"], doc["color"]["g"], doc["color"]["b"]);
+    Serial.printf("[MQTT] Set color: RGB(%d,%d,%d)\n", strip.red(), strip.green(), strip.blue());
   }
-
   Serial.println("==========================================\n");
   net::mqtt::publish_status(strip);
 }
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
   delay(1000); // Wait for Serial to initialize
 
@@ -59,7 +60,7 @@ void setup() {
 
   // LED Strip Initialization
   strip.init();
-  
+
   net::wifi::init();
 
   // MQTT Setup
@@ -68,8 +69,10 @@ void setup() {
   Serial.println("\n========== Setup Complete ==========\n");
 }
 
-void loop() {
-  if (!net::mqtt::is_connected()) {
+void loop()
+{
+  if (!net::mqtt::is_connected())
+  {
     Serial.println("[WARN] MQTT disconnected, reconnecting...");
     net::mqtt::reconnect(strip);
   }
@@ -78,7 +81,3 @@ void loop() {
   strip.update();
   delay(50);
 }
-
-
-
-

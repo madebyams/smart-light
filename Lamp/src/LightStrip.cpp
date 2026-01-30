@@ -48,6 +48,16 @@ void light_strip::update() {
   }
 }
 
+void light_strip::setState(bool on) {
+  this->strip_on = on;
+}
+
+void light_strip::setColor(uint8_t r, uint8_t g, uint8_t b) {
+  this->r = r;
+  this->g = g;
+  this->b = b;
+}
+
 bool light_strip::is_on() {
   return this->strip_on;
 }
