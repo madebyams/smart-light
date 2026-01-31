@@ -57,5 +57,5 @@ if not Path("config.yml").exists():
 else:
     environment = yaml.safe_load(open("config.yml", "r"))
 
-with open("include/Config.hpp", "w") as config_header:
+with open("include/config.hpp", "w") as config_header:
     config_header.write(render_define(environment))

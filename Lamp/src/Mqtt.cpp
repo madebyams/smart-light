@@ -68,21 +68,13 @@ void mqtt::publish_status(light_strip& light_strip) {
     color["r"] = light_strip.red();
     color["g"] = light_strip.green();
     color["b"] = light_strip.blue();
+    color["w"] = light_strip.white();
   }
 
   char buf[256];
-  size_t len = serializeJson(doc, buf);
-
-  Serial.println("\n---------- Publishing Status ----------");
-  Serial.printf("Topic: %s\n", MQTT_TOPICS_STATUS);
-  Serial.printf("Message: %s\n", buf);
-  Serial.printf("Size: %d bytes\n", len);
-
-  if (client.publish(MQTT_TOPICS_STATUS, buf)) {
-    Serial.println("✓ Published successfully!");
-  } else {
-    Serial.println("✗ Publish failed!");
+  if (size_t len = serializeJson(doc, buf); !static_cast<bool>(len)) {
+    return;
   }
 
-  Serial.println("---------------------------------------\n");
+  client.publish(MQTT_TOPICS_STATUS, buf);
 }

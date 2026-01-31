@@ -2,60 +2,56 @@
 #include "LightStrip.hpp"
 
 void light_strip::init() {
-  Serial.println("\n[1/3] Initializing LED Strip...");
-  Serial.printf("  - Pixels: %d\n", LIGHT_LED_AMOUNT);
-  Serial.printf("  - Data Pin: %d\n", LIGHT_PINS_DATA);
-  Serial.printf("  - Clock Pin: %d\n", LIGHT_PINS_CLOCK);
-
   strip.begin();
-  strip.show(); // Clear all LEDs (turn off)
-
-  Serial.println("  ✓ LED Strip initialized");
-}
-
-void light_strip::fill_color(uint8_t r, uint8_t g, uint8_t b) {
-  for (uint16_t i = 0; i < pixels; i++) {
-    strip.setPixelColor(i, r, g, b);
-  }
+  strip.setBrightness(this->brightness);
   strip.show();
 }
 
 void light_strip::update() {
-  static unsigned long last_log = 0;
-  static bool last_state = false;
-  static uint8_t last_r = 0, last_g = 0, last_b = 0;
-
   if (strip_on) {
-    this->fill_color(r, g, b);
-  } else {
-    this->fill_color(0, 0, 0);
-  }
-
-  // Log every 5 seconds or on state/color change
-  if (millis() - last_log > 5000 || last_state != strip_on || last_r != r || last_g != g || last_b != b) {
-    Serial.printf("[LED] State: %s", strip_on ? "ON" : "OFF");
-    if (strip_on) {
-      Serial.printf(" | Color: RGB(%d,%d,%d)", r, g, b);
+    if (mode == "party") {
+      //updatePartyMode();
+    } else {
+      set_all(r, g, b, w);
     }
-    
-    Serial.printf(" | Free Heap: %d\n", ESP.getFreeHeap());
-
-    last_log = millis();
-    last_state = strip_on;
-    last_r = r;
-    last_g = g;
-    last_b = b;
+  } else {
+    set_all(0, 0, 0, 0);
   }
 }
 
-void light_strip::setState(bool on) {
+void light_strip::reset_animation_state() {
+  this->set_animation_state(0);
+}
+
+void light_strip::set_all(uint8_t red, uint8_t green, uint8_t blue, uint8_t white) {
+  for (int i = 0; i < pixels; i++) {
+    strip.setPixelColor(i, strip.Color(red, green, blue, white));
+  }
+  strip.show();
+}
+
+
+void light_strip::set_power(bool on) {
   this->strip_on = on;
 }
 
-void light_strip::setColor(uint8_t r, uint8_t g, uint8_t b) {
+void light_strip::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t w) {
   this->r = r;
   this->g = g;
   this->b = b;
+  this->w = w;
+}
+
+void light_strip::set_brightness(uint8_t brightness) {
+  this->brightness = brightness;
+}
+
+void light_strip::set_mode(std::string mode) {
+  this->mode = mode;
+}
+
+void light_strip::set_animation_state(uint16_t animation_state) {
+  this->animation_state = 0;
 }
 
 bool light_strip::is_on() {
@@ -72,4 +68,20 @@ uint8_t light_strip::green() {
 
 uint8_t light_strip::blue() {
   return this->b;
+}
+
+uint8_t light_strip::white() {
+  return this->w;
+}
+
+uint8_t light_strip::get_brightness() {
+  return this->brightness;
+}
+
+std::string light_strip::get_mode() {
+  return this->mode;
+}
+
+uint16_t light_strip::get_animation_state() {
+  return this->animation_state;
 }

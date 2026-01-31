@@ -6,8 +6,8 @@
 #define DETECTIONMODULE_MEASUREMENT_HPP
 #include <sstream>
 
-#include "AirSensor.hpp"
-#include "RGBSensor.hpp"
+#include "air_sensor/air_sensor.hpp"
+#include "rgb_sensor/rgb_sensor.hpp"
 
 struct measurement {
     int brightness;

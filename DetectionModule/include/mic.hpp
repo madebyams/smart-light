@@ -7,6 +7,7 @@
 
 class mic {
     int pin_;
+    int last_measurement = 0;
 public:
     explicit mic(int pin) : pin_(pin) {}
     void init();

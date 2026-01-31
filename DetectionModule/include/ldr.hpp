@@ -6,6 +6,7 @@
 #define RADAR_LDR_H
 class ldr {
     int pin_;
+    int last_measurement = 0;
 public:
     explicit ldr(int pin) : pin_(pin) {}
     void init();

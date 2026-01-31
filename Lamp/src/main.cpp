@@ -8,43 +8,49 @@
 #include "WiFi.hpp"
 
 // LED Strip Configuration
-light_strip strip(LIGHT_LED_AMOUNT, LIGHT_PINS_DATA, LIGHT_PINS_CLOCK);
+light_strip strip(LIGHT_LED_AMOUNT, LIGHT_PIN, LIGHT_BRIGHTNESS);
 
-void mqtt_callback(char *topic, byte *payload, unsigned int len)
-{
+void mqtt_callback(char *topic, byte *payload, unsigned int len) {
   String msg;
-  for (uint16_t i = 0; i < len; i++)
-    msg += (char)payload[i];
-
-  Serial.println("\n========== MQTT Message Received ==========");
-  Serial.printf("Topic: %s\n", topic);
-  Serial.printf("Payload: %s\n", msg.c_str());
-  Serial.printf("Length: %d bytes\n", len);
-
   DynamicJsonDocument doc(1024);
-  DeserializationError error = deserializeJson(doc, msg);
 
-  if (error)
-  {
-    Serial.printf("[ERROR] JSON parsing failed: %s\n", error.c_str());
-    Serial.println("==========================================\n");
+  for (uint16_t i = 0; i < len; i++) {
+    msg += static_cast<char>(payload[i]);
+  }
+
+  if (DeserializationError error = deserializeJson(doc, msg); error) {
     return;
   }
-  // handle state
-  if (doc.containsKey("state"))
-  {
-    String state = doc["state"];
-    strip.setState(state == "ON");
-    Serial.printf("[MQTT] Set state: %s\n", state.c_str());
+
+  const char* targetId = doc["id"] | "";
+  if (strlen(targetId) == 0 || strcmp(MQTT_DEVICE_ID,targetId) != 0) {
+    Serial.println("Wrong id!");
+    return;
   }
 
-  // handle color
-  if (doc.containsKey("color"))
-  {
-    strip.setColor(doc["color"]["r"], doc["color"]["g"], doc["color"]["b"]);
-    Serial.printf("[MQTT] Set color: RGB(%d,%d,%d)\n", strip.red(), strip.green(), strip.blue());
+  // handle state
+  if (doc.containsKey("state")) {
+    String state = doc["state"];
+    strip.set_power(state == "ON");
   }
-  Serial.println("==========================================\n");
+
+  if (const char* modeStr = doc["mode"] | ""; strlen(modeStr) > 0) {
+    strip.set_mode(modeStr);
+    strip.reset_animation_state();
+  }
+
+
+  // handle color
+  if (doc.containsKey("color")) {
+    strip.setColor(doc["color"]["r"], doc["color"]["g"], doc["color"]["b"], doc["color"]["w"]);
+  }
+
+
+  if (uint8_t newBrightness = doc["brightness"] | strip.get_brightness(); newBrightness != strip.get_brightness()) {
+    strip.set_brightness(newBrightness);
+  }
+
+  strip.update();
   net::mqtt::publish_status(strip);
 }
 
