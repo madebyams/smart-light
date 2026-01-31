@@ -1,0 +1,52 @@
+sequence:
+  - if:
+      - type: is_illuminance
+        condition: device
+        device_id: c2ddb728912e5e44ff14115070f4454b
+        entity_id: f66d3282624fa16ff75413f99b2ec0cc
+        domain: sensor
+        below: 10
+    then:
+      - action: mqtt.publish
+        metadata: {}
+        data:
+          evaluate_payload: false
+          qos: 0
+          retain: false
+          topic: home/ledstrip/set
+          payload: |-
+            {
+              "id": "ESP32_LightStrip",
+              "state": "ON",
+              "mode": "color",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "w": 255
+              },
+              "brightness": 255
+            }
+    else:
+      - action: mqtt.publish
+        metadata: {}
+        data:
+          evaluate_payload: false
+          qos: 0
+          retain: false
+          payload: |-
+            {
+              "id": "ESP32_LightStrip",
+              "state": "OFF",
+              "mode": "color",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "w": 0
+              },
+              "brightness": 0
+            }
+          topic: home/ledstrip/set
+alias: Brightness dependant Lamp control
+description: ""
