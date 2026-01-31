@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <WiFiClient.h>
 
 #include "Average.hpp"
 #include "AirSensor.hpp"
@@ -7,10 +8,14 @@
 #include "Measurement.hpp"
 #include "Mic.hpp"
 #include "Mqtt.hpp"
+#include "PubSubClient.h"
 #include "RadarSensor.hpp"
 #include "RGBSensor.hpp"
 #include "WiFi.hpp"
 
+WiFiClient wifi_client;
+PubSubClient pub_sub_client(wifi_client);
+net::mqtt mqtt_client = net::mqtt(&pub_sub_client);
 
 air_sensor air_sensor_instance;
 air_sensor::data_buffer air_data_buffer;
@@ -33,8 +38,10 @@ void setup() {
   Serial.begin(115200);
   pinMode(GPIO_STATUS_LED, OUTPUT);
 
+
   net::wifi::init();
-  net::mqtt::init();
+  mqtt_client.init();
+
 
   mic_sensor.init();
   ldr_sensor.init();
@@ -48,8 +55,8 @@ void setup() {
 }
 
 void loop() {
-  if (!net::mqtt::is_connected()) {
-    net::mqtt::reconnect();
+  if (!mqtt_client.is_connected()) {
+    mqtt_client.reconnect();
   }
 
   for (int i = 0; i < BUFFER_SIZE; i++) {
@@ -68,6 +75,6 @@ void loop() {
     .light_color = average::calculate_average(&rgb_sensor_buffer, BUFFER_SIZE)
   };
 
-  net::mqtt::write(measurement.to_string());
-  delay(5000);
+  mqtt_client.write(measurement.to_string().c_str());
+  delay(1000);
 }

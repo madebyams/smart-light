@@ -23,7 +23,7 @@ struct measurement {
         json_stream << "\"brightness\":" << brightness << ",\n";
         json_stream << "\"noise_level\":" << noise_level << ",\n";
         json_stream << "\"presence\":" << presence << "\n";
-        json_stream << "\"air_quality\":" << air_quality.to_string() << "\n";
+        json_stream << "\"air_quality\":" << air_quality.to_string() << ",\n";
         json_stream << "\"light_color\":" << light_color.to_string() << "\n";
         json_stream << "}\n";
 

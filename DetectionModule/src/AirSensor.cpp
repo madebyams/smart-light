@@ -27,7 +27,7 @@ std::string air_sensor::data::to_string() {
     json_stream << "\"co2\":" << co2 << ",\n";
     json_stream << "\"temperature\":" << temperature << ",\n";
     json_stream << "\"humidity\":" << humidity << "\n";
-    json_stream << "}\n";
+    json_stream << "}";
 
     return json_stream.str();
 }

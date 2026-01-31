@@ -22,7 +22,7 @@ std::string rgb_sensor::color::to_string() {
     json_stream << "\"red\":" << red << ",\n";
     json_stream << "\"green\":" << green << ",\n";
     json_stream << "\"blue\":" << blue << "\n";
-    json_stream << "}\n";
+    json_stream << "}";
 
     return json_stream.str();
 }

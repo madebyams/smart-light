@@ -3,3 +3,5 @@
 .idea
 config.yml
 include/Config.h
+include/Config.hpp
+config.template.yml
