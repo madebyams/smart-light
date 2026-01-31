@@ -1,8 +1,7 @@
 LIGHT:
-  LED_AMOUNT: 100
-  PINS:
-    DATA: 23
-    CLOCK: 18
+  LED_AMOUNT: 20
+  PIN: 4
+  BRIGHTNESS: 255
 
 WIFI:
   SSID: ""
@@ -18,5 +17,5 @@ MQTT:
   CONNECTION_ATTEMPTS: 5
 
   TOPICS:
-    SET: ""
-    STATUS: ""
+    SET: "home/ledstrip/set"
+    STATUS: "home/ledstrip/status"

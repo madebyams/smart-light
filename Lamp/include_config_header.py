@@ -4,7 +4,8 @@ import yaml
 empty_environment = {    
     "LIGHT": {
         "LED_AMOUNT": -1,
-        "PINS": 4
+        "PIN": 4,
+        "BRIGHTNESS": 255
     },
 
     "WIFI": {
