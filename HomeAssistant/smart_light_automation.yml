@@ -1,0 +1,12 @@
+alias: SmartLight
+description: ""
+triggers:
+  - trigger: mqtt
+    options:
+      topic: home/detection
+conditions: []
+actions:
+  - action: script.presence_dependant_lamp_control
+    metadata: {}
+    data: {}
+mode: single
