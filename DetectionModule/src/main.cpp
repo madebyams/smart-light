@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <WiFiClient.h>
 
-#include "../include/air_sensor/air_sensor.hpp"
+#include "air_sensor/air_sensor.hpp"
 #include "config.hpp"
 #include "ldr.hpp"
 #include "masurement.hpp"

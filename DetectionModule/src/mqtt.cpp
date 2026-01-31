@@ -6,7 +6,7 @@
 #include <WiFi.h>
 
 #include "mqtt.hpp"
-#include "Config.hpp"
+#include "config.hpp"
 
 using namespace net;
 

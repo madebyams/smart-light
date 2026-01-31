@@ -1,7 +1,7 @@
 //
 // Created by Amsakan on 15.01.26.
 //
-#include "../include/air_sensor/air_sensor.hpp"
+#include "air_sensor/air_sensor.hpp"
 
 #include <Wire.h>
 

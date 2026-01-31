@@ -1,7 +1,7 @@
 //
 // Created by Amsakan on 28.01.26.
 //
-#include "Config.hpp"
+#include "config.hpp"
 #include <WiFi.h>
 #include "wifi.hpp"
 

@@ -10,7 +10,6 @@
 
 #include <SparkFun_SCD4x_Arduino_Library.h>
 
-#include "../Config.hpp"
 #include "data.hpp"
 
 class air_sensor {
