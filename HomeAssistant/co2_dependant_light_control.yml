@@ -1,0 +1,37 @@
+sequence:
+  - if:
+      - condition: and
+        conditions:
+          - type: is_carbon_dioxide
+            condition: device
+            device_id: e20012aa2f19eb26f8c9673d23c5f7fd
+            entity_id: 89994147c93dea0f7ca94771328d526b
+            domain: sensor
+            above: 1000
+    then:
+      - action: mqtt.publish
+        metadata: {}
+        data:
+          evaluate_payload: false
+          qos: 0
+          retain: false
+          topic: home/ledstrip/set
+          payload: |-
+            {
+              "id": "ESP32_LightStrip",
+              "state": "ON",
+              "mode": "color",
+              "color": {
+                "r": 255,
+                "g": 0,
+                "b": 0,
+                "w": 0
+              },
+              "brightness": 255
+            }
+    else:
+      - action: script.room_light_dependant_lamp_control
+        metadata: {}
+        data: {}
+alias: CO2 dependant lamp control
+description: ""
