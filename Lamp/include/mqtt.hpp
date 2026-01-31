@@ -5,7 +5,7 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-#include "LightStrip.hpp"
+#include "light_strip.hpp"
 
 namespace net {
     namespace mqtt {

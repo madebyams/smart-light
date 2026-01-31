@@ -1,7 +1,7 @@
 #include <WiFi.h>
 
-#include "Config.hpp"
-#include "WiFi.hpp"
+#include "config.hpp"
+#include "wifi.hpp"
 
 using namespace net;
 

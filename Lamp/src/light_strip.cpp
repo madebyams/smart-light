@@ -1,5 +1,5 @@
-#include "Config.hpp"
-#include "LightStrip.hpp"
+#include "config.hpp"
+#include "light_strip.hpp"
 
 void light_strip::init() {
   strip.begin();

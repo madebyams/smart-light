@@ -1,5 +1,5 @@
-#include "Config.hpp"
-#include "Mqtt.hpp"
+#include "config.hpp"
+#include "mqtt.hpp"
 
 #include <ArduinoJson.h>
 

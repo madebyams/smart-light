@@ -7,8 +7,7 @@
 
 #include "setting.hpp"
 
-class light_strip
-{
+class light_strip {
     uint32_t pixels;
     Adafruit_NeoPixel strip;
     bool strip_on = false;

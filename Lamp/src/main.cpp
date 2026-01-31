@@ -2,10 +2,10 @@
 #include <ArduinoJson.h>
 #include <SPI.h>
 
-#include "Config.hpp"
-#include "LightStrip.hpp"
-#include "Mqtt.hpp"
-#include "WiFi.hpp"
+#include "config.hpp"
+#include "light_strip.hpp"
+#include "mqtt.hpp"
+#include "wifi.hpp"
 
 // LED Strip Configuration
 light_strip strip(LIGHT_LED_AMOUNT, LIGHT_PIN, LIGHT_BRIGHTNESS);
