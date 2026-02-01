@@ -1,0 +1,30 @@
+sequence:
+  - if:
+      - type: is_sound_pressure
+        condition: device
+        device_id: c607277331953f6900ae6c8f41a6d027
+        entity_id: a8fa633a7b090b5cf43ff31253c983b1
+        domain: sensor
+        above: 2000
+    then:
+      - action: mqtt.publish
+        metadata: {}
+        data:
+          evaluate_payload: false
+          qos: 0
+          retain: false
+          topic: home/ledstrip/set
+          payload: |-
+            {
+              "id": "ESP32_LightStrip",
+              "state": "ON",
+              "mode": "color",
+              "brightness": 255
+            }
+    else:
+      - action: script.get_back_to_normal_for_corresponding_co2_value
+        metadata: {}
+        data: {}
+alias: Noise dependent lamp control
+description: ""
+
