@@ -16,6 +16,7 @@ class light_strip {
     uint16_t animation_state = 0;
 
 public:
+    using color = color_t;
     using setting = setting_t;
 
     light_strip(uint32_t pixels, uint8_t pin, uint8_t initial_brightness)
@@ -24,14 +25,15 @@ public:
     void init();
 
     void update();
+    void update_party_mode();
     void reset_animation_state();
 
     // Setters
-    void set_all(uint8_t red, uint8_t green, uint8_t blue, uint8_t white);
+    void set_all(color color);
     void set_power(bool on);
-    void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t w);
+    void setColor(color& color);
     void set_mode(std::string mode);
-    void set_brightness(uint8_t brightness);
+    void set_brightness(uint8_t& brightness);
     void set_animation_state(uint16_t animation_state);
 
     // Getters

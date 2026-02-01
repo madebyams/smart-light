@@ -5,51 +5,39 @@
 #include "config.hpp"
 #include "light_strip.hpp"
 #include "mqtt.hpp"
+#include "setting.hpp"
 #include "wifi.hpp"
 
 // LED Strip Configuration
 light_strip strip(LIGHT_LED_AMOUNT, LIGHT_PIN, LIGHT_BRIGHTNESS);
 
 void mqtt_callback(char *topic, byte *payload, unsigned int len) {
-  String msg;
-  DynamicJsonDocument doc(1024);
+  setting_t setting = setting_t::from_mqtt_payload(payload, len);
 
-  for (uint16_t i = 0; i < len; i++) {
-    msg += static_cast<char>(payload[i]);
-  }
+  setting.on_id = [](const std::string& id) {
+    if (id.empty() || MQTT_DEVICE_ID == id) {
+      return;
+    }
+  };
 
-  if (DeserializationError error = deserializeJson(doc, msg); error) {
-    return;
-  }
-
-  const char* targetId = doc["id"] | "";
-  if (strlen(targetId) == 0 || strcmp(MQTT_DEVICE_ID,targetId) != 0) {
-    Serial.println("Wrong id!");
-    return;
-  }
-
-  // handle state
-  if (doc.containsKey("state")) {
-    String state = doc["state"];
+  setting.on_state = [](const std::string& state) {
     strip.set_power(state == "ON");
-  }
+  };
 
-  if (const char* modeStr = doc["mode"] | ""; strlen(modeStr) > 0) {
-    strip.set_mode(modeStr);
+  setting.on_mode = [](const std::string& mode) {
+    strip.set_mode(mode);
     strip.reset_animation_state();
-  }
+  };
 
+  setting.on_color = [](color_t color) {
+    strip.setColor(color);
+  };
 
-  // handle color
-  if (doc.containsKey("color")) {
-    strip.setColor(doc["color"]["r"], doc["color"]["g"], doc["color"]["b"], doc["color"]["w"]);
-  }
+  setting.on_brightness = [](uint8_t brightness) {
+    strip.set_brightness(brightness);
+  };
 
-
-  if (uint8_t newBrightness = doc["brightness"] | strip.get_brightness(); newBrightness != strip.get_brightness()) {
-    strip.set_brightness(newBrightness);
-  }
-
+  setting.apply();
   strip.update();
   net::mqtt::publish_status(strip);
 }
@@ -75,14 +63,14 @@ void setup()
   Serial.println("\n========== Setup Complete ==========\n");
 }
 
-void loop()
-{
+void loop() {
   if (!net::mqtt::is_connected())
   {
     Serial.println("[WARN] MQTT disconnected, reconnecting...");
     net::mqtt::reconnect(strip);
   }
 
+  net::mqtt::publish_status(strip);
   net::mqtt::client.loop();
   strip.update();
   delay(50);

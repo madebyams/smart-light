@@ -1,10 +1,8 @@
 #ifndef WIFI_HPP
 #define WIFI_HPP
 
-namespace net {
-    namespace wifi {
+namespace net::wifi {
         void init();
-    }
 }
 
 #endif

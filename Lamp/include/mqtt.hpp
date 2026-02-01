@@ -7,8 +7,7 @@
 
 #include "light_strip.hpp"
 
-namespace net {
-    namespace mqtt {
+namespace net::mqtt {
         extern WiFiClient wifi_client;
         extern PubSubClient client;
 
@@ -16,7 +15,7 @@ namespace net {
         bool is_connected();
         void reconnect(light_strip& light_strip);
         void publish_status(light_strip& light_strip);
-    }
 }
+
 
 #endif
