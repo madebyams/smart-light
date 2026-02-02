@@ -18,13 +18,29 @@ sequence:
             {
               "id": "ESP32_LightStrip",
               "state": "ON",
-              "mode": "color",
+              "mode": "party",
               "brightness": 255
             }
     else:
-      - action: script.get_back_to_normal_for_corresponding_co2_value
+      - action: mqtt.publish
         metadata: {}
-        data: {}
+        data:
+          evaluate_payload: false
+          qos: 0
+          retain: false
+          topic: home/ledstrip/set
+          payload: |-
+            {
+              "id": "ESP32_LightStrip",
+              "state": "ON",
+              "mode": "color",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "w": 255
+              },
+              "brightness": 255
+            }
 alias: Noise dependent lamp control
 description: ""
-
