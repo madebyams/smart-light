@@ -6,7 +6,6 @@ Lamp:build:
     - |
       cd Lamp
       pip install -U platformio
-      pip install PyYAML
       python include_config_header.py
       pio upgrade --dev
       pio pkg update
