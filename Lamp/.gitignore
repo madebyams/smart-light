@@ -3,5 +3,3 @@
 .pio
 include/Config.hpp
 include/config.hpp
-config.home.yml
-config.yml
