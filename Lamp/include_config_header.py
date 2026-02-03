@@ -1,5 +1,5 @@
 from pathlib import Path
-import yaml
+import json
 
 empty_environment = {    
     "LIGHT": {
@@ -52,10 +52,10 @@ def render_define(config):
 
     return result
 
-if not Path("config.yml").exists():
+if not Path("config.json").exists():
     environment = empty_environment
 else:
-    environment = yaml.safe_load(open("config.yml", "r"))
+    environment = json.loads(open("config.json", "r").read())
 
 with open("include/config.hpp", "w") as config_header:
     config_header.write(render_define(environment))
