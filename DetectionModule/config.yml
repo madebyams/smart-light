@@ -1,0 +1,20 @@
+GPIO:
+  STATUS_LED: 2
+  LDR: 36
+  MIC: 34
+
+WIFI:
+  SSID: ""
+  PASSWORD: ""
+
+MQTT:
+  SERVER: ""
+  PORT: 1883
+  DEVICE_ID: "DetectionModule"
+  USER: ""
+  PASSWORD: ""
+
+  CONNECTION_ATTEMPTS: 5
+
+  TOPICS:
+    MEASUREMENT_DATA: "home/detection"
