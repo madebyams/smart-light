@@ -15,9 +15,11 @@ void mqtt_callback(char *topic, byte *payload, unsigned int len) {
   setting_t setting = setting_t::from_mqtt_payload(payload, len);
 
   setting.on_id = [](const std::string& id) {
-    if (id.empty() || MQTT_DEVICE_ID == id) {
-      return;
+    if (id.empty() || MQTT_DEVICE_ID != id) {
+      return false;
     }
+
+    return true;
   };
 
   setting.on_state = [](const std::string& state) {

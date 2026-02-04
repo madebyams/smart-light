@@ -63,6 +63,7 @@ void mqtt::reconnect(light_strip& light_strip) {
 void mqtt::publish_status(light_strip& light_strip) {
   DynamicJsonDocument doc(512);
   doc["state"] = light_strip.is_on() ? "ON" : "OFF";
+  doc["id"] = MQTT_DEVICE_ID;
   if (light_strip.is_on()) {
     JsonObject color = doc.createNestedObject("color");
     color["r"] = light_strip.red();

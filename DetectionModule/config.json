@@ -18,5 +18,10 @@
     "TOPICS": {
       "MEASUREMENT_DATA": "home/detection"
     }
+  },
+  "MIC": {
+    "SAMPLE_RATE": 8000,
+    "WINDOW_MS": 100,
+    "ADC_BITS": 12
   }
 }

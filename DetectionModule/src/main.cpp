@@ -53,5 +53,5 @@ void loop() {
   };
 
   mqtt_client.write(measurement.to_string().c_str());
-  delay(5000);
+  delay(1000);
 }

@@ -27,6 +27,12 @@ empty_environment = {
         "TOPICS": {
             "MEASUREMENT_DATA": ""
         }
+    },
+
+    "MIC": {
+        "SAMPLE_RATE": 8000,
+        "WINDOW_MS": 100,
+        "ADC_BITS": 12
     }
 }
 

@@ -15,7 +15,7 @@ struct setting_t {
     color_t color;
     uint8_t brightness;
 
-    std::function<void (std::string)> on_id = {};
+    std::function<bool (std::string)> on_id = {};
     std::function<void (std::string)> on_state = {};
     std::function<void (std::string)> on_mode = {};
     std::function<void (color_t)> on_color = {};
@@ -41,7 +41,10 @@ struct setting_t {
     }
 
     void apply() const {
-        on_id(id);
+        if(!on_id(id)) {
+            return;
+        }
+
         on_state(state);
         on_mode(mode);
         on_color(color);
