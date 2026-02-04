@@ -2,10 +2,10 @@ sequence:
   - if:
       - type: is_illuminance
         condition: device
-        device_id: c2ddb728912e5e44ff14115070f4454b
-        entity_id: f66d3282624fa16ff75413f99b2ec0cc
+        device_id: 70c167fef056ee3237e15f83841f3b87
+        entity_id: c23e7c5a6f416bf90acb3516d3f6b27a
         domain: sensor
-        below: 10
+        below: 200
     then:
       - action: script.party_mode_in_case_of_loud_music
         metadata: {}

@@ -4,24 +4,27 @@ sequence:
         conditions:
           - type: is_present
             condition: device
-            device_id: c15ab93fe83f1b57b8ec12354516abbd
-            entity_id: 8ee7004d479ca8e5148db78838f561f6
+            device_id: 7a17b7b44b5d606ef1d850bc75525685
+            entity_id: d698de714a27aca18272cf0d4146d90c
             domain: binary_sensor
           - type: is_carbon_dioxide
             condition: device
-            device_id: e20012aa2f19eb26f8c9673d23c5f7fd
-            entity_id: 89994147c93dea0f7ca94771328d526b
+            device_id: 3253637d30a83f05fc0d82d6f0958558
+            entity_id: 692888b5e1b4c32f830b57b2b2a39ec1
             domain: sensor
             above: 500
             below: 1000
           - type: is_sound_pressure
             condition: device
-            device_id: c607277331953f6900ae6c8f41a6d027
-            entity_id: a8fa633a7b090b5cf43ff31253c983b1
+            device_id: 69d6c23daffc370939cf995e2f8507c4
+            entity_id: 858b5c3fa043904ecfcd44c4139b006f
             domain: sensor
-            above: 1000
+            above: 30
     then:
       - action: script.get_back_to_normal_for_corresponding_co2_value
+        metadata: {}
+        data: {}
+      - action: script.warmeskript
         metadata: {}
         data: {}
     else:

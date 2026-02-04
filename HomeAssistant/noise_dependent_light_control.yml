@@ -2,10 +2,10 @@ sequence:
   - if:
       - type: is_sound_pressure
         condition: device
-        device_id: c607277331953f6900ae6c8f41a6d027
-        entity_id: a8fa633a7b090b5cf43ff31253c983b1
+        device_id: 69d6c23daffc370939cf995e2f8507c4
+        entity_id: 858b5c3fa043904ecfcd44c4139b006f
         domain: sensor
-        above: 2000
+        above: 50
     then:
       - action: mqtt.publish
         metadata: {}
@@ -28,7 +28,6 @@ sequence:
           evaluate_payload: false
           qos: 0
           retain: false
-          topic: home/ledstrip/set
           payload: |-
             {
               "id": "ESP32_LightStrip",
@@ -42,5 +41,6 @@ sequence:
               },
               "brightness": 255
             }
+          topic: home/ledsteip/set
 alias: Noise dependent lamp control
 description: ""

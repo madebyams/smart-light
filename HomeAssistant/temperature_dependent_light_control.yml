@@ -1,0 +1,52 @@
+sequence:
+  - if:
+      - type: is_temperature
+        condition: device
+        device_id: a073643ca7e39c11de894625162d469d
+        entity_id: 286cf64f78eeac9a57a8bc5c7db08c50
+        domain: sensor
+        above: 82
+    then:
+      - action: mqtt.publish
+        metadata: {}
+        data:
+          evaluate_payload: false
+          qos: 0
+          retain: false
+          topic: home/ledstrip/set
+          payload: |-
+            {
+              "id": "ESP32_LightStrip_2",
+              "state": "ON",
+              "mode": "color",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 255,
+                "w": 0
+              },
+              "brightness": 255
+            }
+    else:
+      - action: mqtt.publish
+        metadata: {}
+        data:
+          evaluate_payload: false
+          qos: 0
+          retain: false
+          payload: |-
+            {
+              "id": "ESP32_LightStrip_2",
+              "state": "OFF",
+              "mode": "color",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "w": 0
+              },
+              "brightness": 0
+            }
+          topic: home/ledstrip/set
+alias: Wärmeskript
+description: ""
