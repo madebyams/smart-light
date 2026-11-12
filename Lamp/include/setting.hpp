@@ -5,6 +5,11 @@
 #ifndef LAMP_SETTING_HPP
 #define LAMP_SETTING_HPP
 
+#include <cstddef>
+#include <cstdint>
+#include <functional>
+#include <string>
+
 #include "color.hpp"
 #include "ArduinoJson.h"
 
