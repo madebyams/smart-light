@@ -8,11 +8,13 @@ tasks:
   - build-detection-module: |
       cd smart-light/DetectionModule
       python3 -m pip install --break-system-packages --upgrade platformio
+      export PATH="$HOME/.local/bin:$PATH"
       python3 include_config_header.py
       pio upgrade --dev
       pio pkg update
       pio run
   - build-lamp-module: |
+      export PATH="$HOME/.local/bin:$PATH"
       cd smart-light/Lamp
       python3 include_config_header.py
       pio upgrade --dev
