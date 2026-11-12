@@ -12,12 +12,14 @@ tasks:
       python3 include_config_header.py
       pio pkg update
       pio run
+      tar -czf firmware-artifacts.tar.gz .pio/build
   - build-lamp-module: |
       export PATH="$HOME/.local/bin:$PATH"
       cd smart-light/Lamp
       python3 include_config_header.py
       pio pkg update
       pio run
+      tar -czf firmware-artifacts.tar.gz .pio/build
 artifacts:
-  - smart-light/DetectionModule/.pio/build/
-  - smart-light/Lamp/.pio/build/
+  - smart-light/DetectionModule/firmware-artifacts.tar.gz
+  - smart-light/Lamp/firmware-artifacts.tar.gz
