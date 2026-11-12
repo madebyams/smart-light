@@ -1,0 +1,23 @@
+image: debian/stable
+packages:
+  - python3
+  - python3-pip
+sources:
+  - https://git.sr.ht/~itsams_wav/smart-light
+tasks:
+  - build-detection-module: |
+      cd smart-light/DetectionModule
+      python3 -m pip install --break-system-packages --upgrade platformio
+      python3 include_config_header.py
+      pio upgrade --dev
+      pio pkg update
+      pio run
+  - build-lamp-module: |
+      cd smart-light/Lamp
+      python3 include_config_header.py
+      pio upgrade --dev
+      pio pkg update
+      pio run
+artifacts:
+  - smart-light/DetectionModule/.pio/build/
+  - smart-light/Lamp/.pio/build/
