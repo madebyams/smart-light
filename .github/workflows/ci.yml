@@ -1,0 +1,67 @@
+name: CI
+
+# Converted from the former builds.sr.ht manifest (.build.yml).
+# Each sourcehut task is one step; $HOME is the workspace, as on sourcehut.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:stable
+    env:
+      DEBIAN_FRONTEND: noninteractive
+    defaults:
+      run:
+        shell: bash -xe {0}
+    steps:
+      - name: Install packages
+        run: |
+          apt-get update
+          apt-get install -y git ca-certificates \
+            python3 \
+            python3-pip
+
+      - uses: actions/checkout@v4
+        with:
+          path: "smart-light"
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: "build-detection-module"
+        run: |
+          export HOME="$GITHUB_WORKSPACE"
+          cd "$HOME"
+          cd smart-light/DetectionModule
+          python3 -m pip install --break-system-packages --upgrade platformio
+          export PATH="$HOME/.local/bin:$PATH"
+          python3 include_config_header.py
+          pio pkg update
+          pio run
+          tar -czf firmware-artifacts.tar.gz .pio/build
+
+      - name: "build-lamp-module"
+        run: |
+          export HOME="$GITHUB_WORKSPACE"
+          cd "$HOME"
+          export PATH="$HOME/.local/bin:$PATH"
+          cd smart-light/Lamp
+          python3 include_config_header.py
+          pio pkg update
+          pio run
+          tar -czf firmware-artifacts.tar.gz .pio/build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          if-no-files-found: warn
+          path: |
+            smart-light/DetectionModule/firmware-artifacts.tar.gz
+            smart-light/Lamp/firmware-artifacts.tar.gz
